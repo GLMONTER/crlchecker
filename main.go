@@ -31,7 +31,7 @@ type CRLData struct {
 	modTime        time.Time
 }
 
-type TLSCRLChecker struct {
+type CRLChecker struct {
 	next    http.Handler
 	name    string
 	config  *Config
@@ -44,7 +44,7 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 	}
 	log.Printf("Starting TLS CRL Checker plugin %q with config: %+v\n", name, config)
 
-	tc := &TLSCRLChecker{
+	tc := &CRLChecker{
 		next:   next,
 		name:   name,
 		config: config,
@@ -57,7 +57,7 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 	return tc, nil
 }
 
-func (tc *TLSCRLChecker) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (tc *CRLChecker) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.TLS == nil || len(r.TLS.PeerCertificates) == 0 {
 		http.Error(w, "TLS client certificate is required for authentication.", http.StatusUnauthorized)
 		return
@@ -109,7 +109,7 @@ func getCertificateSANs(cert *x509.Certificate) string {
 	return strings.Join(sans, ", ")
 }
 
-func (tc *TLSCRLChecker) loadCRL() {
+func (tc *CRLChecker) loadCRL() {
 	crlBytes, err := os.ReadFile(tc.config.CRLFilePath)
 	if err != nil {
 		log.Printf("Failed to read CRL file at %s: %v", tc.config.CRLFilePath, err)
@@ -150,7 +150,7 @@ func (tc *TLSCRLChecker) loadCRL() {
 	log.Println("CRL file loaded successfully.")
 }
 
-func (tc *TLSCRLChecker) watchCRLFile() {
+func (tc *CRLChecker) watchCRLFile() {
 	ticker := time.NewTicker(1 * time.Minute)
 	defer ticker.Stop()
 
