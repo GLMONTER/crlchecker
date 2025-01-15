@@ -10,7 +10,7 @@ experimental:
   plugins:
     crlchecker:
       modulename: "github.com/GLMONTER/crlchecker"
-      version: "v1.0.0"
+      version: "v1.0.1"
 
 entryPoints:
   web:
