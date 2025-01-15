@@ -1,0 +1,6 @@
+displayName: TlsCrlChecker
+type: middleware
+import: "github.com/GLMONTER/crlchecker"
+summary: Reject revoked client certificate based on CRL file.
+testData:
+  test: "test"

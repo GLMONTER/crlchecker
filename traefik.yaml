@@ -1,0 +1,16 @@
+experimental:
+  localPlugins:
+    crlchecker:
+      modulename: "github.com/GLMONTER/crlchecker"
+
+entryPoints:
+  web:
+    address: ":80"
+
+api:
+  dashboard: true
+
+providers:
+  file:
+    filename: /etc/traefik/dynamic.yaml
+    watch: true
