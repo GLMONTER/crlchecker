@@ -1,7 +1,16 @@
+#uncomment to test locally
+
+#experimental:
+#  localPlugins:
+#    crlchecker:
+#      modulename: "github.com/GLMONTER/crlchecker"
+
+#comment to test locally
 experimental:
-  localPlugins:
+  plugins:
     crlchecker:
       modulename: "github.com/GLMONTER/crlchecker"
+      version: "v1.0.0"
 
 entryPoints:
   web:
